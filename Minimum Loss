@@ -1,0 +1,26 @@
+
+class Result {
+    public static int minimumLoss(List<Long> price) {
+        Map<Long, Integer> pim = new HashMap<>();
+        for (int i = 0; i < price.size(); i++) {
+            pim.put(price.get(i), i);
+        }
+        
+        List<Long> sortedPrices = new ArrayList<>(price);
+        Collections.sort(sortedPrices);
+        
+        long minLoss = Long.MAX_VALUE;
+        for (int i = 0; i < sortedPrices.size() - 1; i++) {
+            long buyPrice = sortedPrices.get(i + 1);
+            long sellPrice = sortedPrices.get(i);
+            
+            if (pim.get(buyPrice) < pim.get(sellPrice)) {
+                long currentLoss = buyPrice - sellPrice;
+                if (currentLoss < minLoss) {
+                    minLoss = currentLoss;
+                }
+            }
+        }
+        return (int) minLoss;
+    }
+}
