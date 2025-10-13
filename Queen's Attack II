@@ -1,0 +1,39 @@
+import java.util.*;
+public class Solution {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int k = sc.nextInt();
+        int r_q = sc.nextInt();
+        int c_q = sc.nextInt();
+
+        // [up, down, left, right, up-left, up-right, down-left, down-right]
+        int[] distances = {n - r_q, r_q - 1, c_q - 1, n - c_q,
+                           Math.min(n - r_q, c_q - 1), Math.min(n - r_q, n - c_q),
+                           Math.min(r_q - 1, c_q - 1), Math.min(r_q - 1, n - c_q)};
+
+        for (int i = 0; i < k; i++) {
+            int r_o = sc.nextInt();
+            int c_o = sc.nextInt();
+
+            if (r_o == r_q) {
+                if (c_o < c_q) distances[2] = Math.min(distances[2], c_q - c_o - 1);
+                else distances[3] = Math.min(distances[3], c_o - c_q - 1);
+            } else if (c_o == c_q) {
+                if (r_o < r_q) distances[1] = Math.min(distances[1], r_q - r_o - 1);
+                else distances[0] = Math.min(distances[0], r_o - r_q - 1);
+            } else if (Math.abs(r_o - r_q) == Math.abs(c_o - c_q)) {
+                if (r_o > r_q && c_o < c_q) distances[4] = Math.min(distances[4], r_o - r_q - 1);
+                else if (r_o > r_q && c_o > c_q) distances[5] = Math.min(distances[5], r_o - r_q - 1);
+                else if (r_o < r_q && c_o < c_q) distances[6] = Math.min(distances[6], r_q - r_o - 1);
+                else distances[7] = Math.min(distances[7], r_q - r_o - 1);
+            }
+        }
+
+        int totalAttacks = 0;
+        for (int dist : distances) {
+            totalAttacks += dist;
+        }
+        System.out.println(totalAttacks);
+    }
+}
