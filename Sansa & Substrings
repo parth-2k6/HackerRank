@@ -1,0 +1,18 @@
+import java.util.*;
+public class Solution {
+    public static long substrings(String n) {
+        long ts = 0; long cs = 0; long m = 1000000007;
+        for (int i = 0; i < n.length(); i++) {
+            long digit = Long.parseLong(n.substring(i, i + 1));
+            cs = (cs * 10 + digit * (i + 1))%m ;
+            ts = (ts + cs)%m ;
+        }
+        return (long) ts;
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String n = sc.nextLine();
+        System.out.println(substrings(n));
+        sc.close();
+    }
+}
