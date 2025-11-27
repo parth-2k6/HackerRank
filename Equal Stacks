@@ -1,0 +1,37 @@
+
+class Solution {
+
+    public static int equalStacks(List<Integer> h1, List<Integer> h2, List<Integer> h3) {
+        Stack<Integer> s1 = new Stack<>();
+        Stack<Integer> s2 = new Stack<>();
+        Stack<Integer> s3 = new Stack<>();
+
+        int h1Height = fillStack(h1, s1);
+        int h2Height = fillStack(h2, s2);
+        int h3Height = fillStack(h3, s3);
+
+        while (!(s1.isEmpty() || s2.isEmpty() || s3.isEmpty())) {
+            if (h1Height == h2Height && h2Height == h3Height) {
+                return h1Height;
+            }
+
+            if (h1Height >= h2Height && h1Height >= h3Height) {
+                h1Height -= s1.pop();
+            } else if (h2Height >= h1Height && h2Height >= h3Height) {
+                h2Height -= s2.pop();
+            } else if (h3Height >= h1Height && h3Height >= h2Height) {
+                h3Height -= s3.pop();
+            }
+        }
+        return 0;
+    }
+
+    private static int fillStack(List<Integer> h, Stack<Integer> s) {
+        int totalHeight = 0;
+        for (int i = h.size() - 1; i >= 0; i--) {
+            totalHeight += h.get(i);
+            s.push(h.get(i));
+        }
+        return totalHeight;
+    }
+}
